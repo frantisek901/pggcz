@@ -241,7 +241,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                         choices: [ '1-vůbec', '2', '3', '4', '5', '6', '7-velmi blízký' ],
                         requiredChoice: true,
                         title: false,
-                        mainText: 'Jak moc jste si se svými spoluhráči blízký? Vyberte na škále od 1 do 7, přičemž 1 znamená vůbec a 7 velmi blízký.'
+                        mainText: 'Jak moc jste si se svými spoluhráči blízký? '
                     },
 
                     {
@@ -250,7 +250,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                         choices: [ '1-vůbec nespolupracuji', '2', '3', '4', '5', '6', '7-velmi spolupracuji' ],
                         requiredChoice: true,
                         title: false,
-                        mainText: 'Myslíte si, že jste typ kamaráda, který spolupracuje se svými blízkými přáteli? Vyberte na škále od 1 do 7, přičemž 1 znamená vůbec s nimi nespolupracuji a 7 velmi s nimi spolupracuji.'
+                        mainText: 'Myslíte si, že jste typ kamaráda, který spolupracuje se svými blízkými přáteli? .'
                     },
 
                     {
@@ -259,7 +259,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                         choices: [ '1-vůbec nespolupracuji', '2', '3', '4', '5', '6', '7-velmi spolupracuji' ],
                         requiredChoice: true,
                         title: false,
-                        mainText: 'Myslíte si, že jste osoba, která spolupracuje s ostatními? Vyberte na škále od 1 do 7, přičemž 1 znamená vůbec s nimi nespolupracuji a 7 velmi s nimi spolupracuji.'
+                        mainText: 'Myslíte si, že jste osoba, která spolupracuje s ostatními?.'
                     },
                 ],
                 freeText: 'Please leave any feedback for the experimenter'
