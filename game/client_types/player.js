@@ -150,21 +150,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                         mainText: 'V kole všechny své HK uložíte rovnou na <u><i>osobní účet</u></i> a do <u><i>společného účtu</u></i> nic neinvestujete. Vaši spoluhráči investovali do <u><i>společného účtu</u></i> po 10 HK každý. <u>Kolik HK získáte ze <i>společného účtu</i></u>?',
                         //
                     },
-                  {
-                        name: 'ChoiceTable',
-                        id: 'lowestPayment2',
-                        choices: ['35', '10', '20', '15'],
-                        correctChoice: 0,
-                        shuffleChoices: true,
-                        mainText: 'V kole všechny své HK uložíte rovnou na <u><i>osobní účet</u></i> a do <u><i>společného účtu</u></i> nic neinvestujete. Vaši spoluhráči investovali do <u><i>společného účtu</u></i> po 10 HK každý. <u>Kolik HK získáte za celé kolo</u>?',
-                        //
-                    },
-  
-//V kole jste si nechal všechny své mince, ale Vaši spoluhráči dali do společného banku po 10 mincí každý. Kolik mincí získáte z banku (A)? Kolik mincí budete mít na konci kola (B)?
-//Odpověď A: 20, 15, 30, 35, 40
-//Odpověď B: 20, 15, 30, 35, 40
-
-  
+    
                   ]
             }
         }
@@ -362,10 +348,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 				totalWinCurrency: 'HK (Herních korun)',
 				showExitCode: false,
 				showFeedbackForm: true,
-                title: 'Váš individuální výsledek je níže. O tom, jak dopadla Vaše skupina a Vy osobně Vás budeme informovat e-mailem, pokud nám jej zanecháte.',
+                title: 'Váš individuální výsledek je níže. O tom, jak dopadla Vaše skupina a Vy osobně Vás budeme informovat e-mailem, pokud nám na sebe e-mail nezanecháte, nebudeme Vám moci poslat peníze za případnou výhru. ',
                 email: {
                    texts: {
-                       label: 'Pokud chcete být informován o výsledcích turnaje a výši Vaší výhry, zanechte nám prosím svůj e-mail:'
+                       label: 'Pokud chcete být informován o výsledcích turnaje a výši Vaší výhry, zanechte nám prosím svůj e-mail, pokud nám na sebe e-mail nezanecháte, nebudeme Vám moci poslat peníze za případnou výhru.'
                    }
                }
            }

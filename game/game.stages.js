@@ -21,7 +21,7 @@ module.exports = function(stager, settings) {
         .step('results')
 
         .next('questionnaire2')
-        .next('end')
+        .next('end')      
 
         .gameover();
 
