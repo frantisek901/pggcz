@@ -191,7 +191,7 @@ module.exports = {
      *
      * If TRUE, all players are pinged before a dispatch
      *
-     * Non-responding clients are disconnected. 
+     * Non-responding clients are disconnected.
      *
      * If only one player is needed and mode is 'WAIT_FOR_N_PLAYERS',
      * pinging is skipped.
