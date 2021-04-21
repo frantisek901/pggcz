@@ -34,10 +34,11 @@ module.exports = {
     // Number of coins each round.
     COINS: 20,
 
-// setup time for each stage 
+// setup time for each stage
     TIMER: {
         instructions: 180000,
         effort: 60000,
+        questionnaire1: 90000,
         quiz: 180000,
         bid: function() {
             var round;
@@ -53,7 +54,7 @@ module.exports = {
             if (round < 3) return 50000;
             return 30000;
         },
-        questionnaire: 45000
+        questionnaire2: 90000
     },
 
     treatments: {

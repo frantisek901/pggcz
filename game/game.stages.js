@@ -15,13 +15,14 @@ module.exports = function(stager, settings) {
         .next('instructions')
         .next('quiz')
         .next('questionnaire1')
-        
+
         .repeat('game', settings.REPEAT)
         .step('bid')
         .step('results')
 
         .next('questionnaire2')
-        .next('end')      
+        .next('email')
+        .next('end')
 
         .gameover();
 

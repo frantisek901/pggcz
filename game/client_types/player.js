@@ -58,7 +58,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 if (player === node.player.id) {
                     color = '';
                     text = ' <img src="imgs/arrow.jpg" ' +
-                    'style="height:15px;"/> Tvůj příspěvek';
+                    'style="height:15px;"/> Vaše investice';
                 }
                 else {
                     color = '#9932CC';
@@ -98,7 +98,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     });
 
 
-    stager.extendStep('quiz', { 
+    stager.extendStep('quiz', {
         widget: {
             name: 'ChoiceManager',
             options: {
@@ -150,12 +150,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                         mainText: 'V kole všechny své HK uložíte rovnou na <u><i>osobní účet</u></i> a do <u><i>společného účtu</u></i> nic neinvestujete. Vaši spoluhráči investovali do <u><i>společného účtu</u></i> po 10 HK každý. <u>Kolik HK získáte ze <i>společného účtu</i></u>?',
                         //
                     },
-    
+
                   ]
             }
         }
 
     });
+
 
     stager.extendStep('bid', {
         frame: 'bidder.htm',
@@ -176,8 +177,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         },
         timeup: function() {
             var contribution = node.game.oldContrib;
-            if ('undefined' === typeof contribution) {
-                contribution = J.randomInt(1, node.game.settings.COINS);
+            if ('undefined' === typeof contribution ||
+                "" === contribution || null === contribution) {
+
+                contribution = J.randomInt(-1, node.game.settings.COINS);
             }
             node.game.bidInput.setValues({
                 // Random value if undefined.
@@ -223,7 +226,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             root: 'container',
             options: {
                 className: 'centered',
-                id: 'questionnaire',
+                id: 'questionnaire1',
                 title: false,
                 forms:  [
                     {
@@ -250,7 +253,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                         choices: [ '1-vůbec nespolupracuji', '2', '3', '4', '5', '6', '7-velmi spolupracuji' ],
                         requiredChoice: true,
                         title: false,
-                        mainText: 'Myslíte si, že jste typ kamaráda, který spolupracuje se svými blízkými přáteli? .'
+                        mainText: 'Myslíte si, že jste typ kamaráda, který spolupracuje se svými blízkými přáteli?'
                     },
 
                     {
@@ -259,11 +262,20 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                         choices: [ '1-vůbec nespolupracuji', '2', '3', '4', '5', '6', '7-velmi spolupracuji' ],
                         requiredChoice: true,
                         title: false,
-                        mainText: 'Myslíte si, že jste osoba, která spolupracuje s ostatními?.'
+                        mainText: 'Myslíte si, že jste osoba, která spolupracuje s ostatními?'
                     },
                 ],
-                freeText: 'Please leave any feedback for the experimenter'
+                freeText: 'Prosím, zanechte nám jakoukoli zpětnou vazbu:'
             }
+        },
+        done: function(values) {
+            // Simplify data structure.
+            return {
+                znajiSe: values.forms.znajiSe.value,
+                blizkost: values.forms.blizkost.value,
+                kooperujeKam: values.forms.kooperujeKam.value,
+                kooperujeCiz: values.forms.kooperujeCiz.value
+            };
         }
     });
 
@@ -273,8 +285,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             root: 'container',
             options: {
                 className: 'centered',
-                id: 'questionnaire',
+                id: 'questionnaire2',
                 title: false,
+                required: true,
                 forms:  [
                     {
                         name: 'ChoiceTable',
@@ -315,13 +328,11 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     {
                         name: 'ChoiceTable',
                         id: 'strategy',
-                        choices: [
-                            [ 'random', 'Náhodně vybírat částky' ],
-                            [ 'egoist', 'Maximalizovat můj vlastní výnos' ],
-                            [ 'group', 'Maximalizovat výnos skupiny' ],
-                            [ 'inequality aversion', 'Minimilizovat rozdíly mezi mým výnosem a výnosem spoluhráčů'],
-                            [ 'other', 'Jiná (prosím, popište níže)' ]
-                        ],
+                        choices: ['Náhodně vybírat částky',
+                            'Maximalizovat můj vlastní výnos',
+                            'Maximalizovat výnos skupiny',
+                            'Minimilizovat rozdíly mezi mým výnosem a výnosem spoluhráčů',
+                            'Jiná (prosím, popište níže)'],
                         title: false,
                         orientation: 'v',
                         requiredChoice: true,
@@ -330,10 +341,47 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 ],
                 freeText: 'Prosím, zanechte nám jakoukoli zpětnou vazbu k experimentu:'
             }
+        },
+        done: function(values) {
+            // Simplify data structure.
+            return {
+                communication: values.forms.communication.value,
+                agreement: values.forms.agreement.value,
+                real1: values.forms.real1.value,
+                real2: values.forms.real2.value,
+                strategy: values.forms.strategy.value
+            };
         }
     });
-    
-    
+
+    stager.extendStep('email', {
+          widget: {
+               name: 'CustomInput',
+               options: {
+                   id: 'email',
+                   mainText: 'Pokud chcete být informován o výsledcích turnaje a výši Vaší výhry, zanechte nám prosím svůj e-mail:',
+                   // Add both requiredChoice and required for backward
+                   // compatibility.
+                   required: true,
+                   requiredChoice: true,
+                   width: '99%',
+                   // Check email.
+                   validation: function(value) {
+                       var res;
+                       res = { value: value };
+                       // Standard validation for empty.
+                       if (value.trim() === '' && this.requiredChoice) {
+                           res.err = this.getText('emptyErr');
+                           return res;
+                       }
+                       // User validation.
+                       if (!J.isEmail(res.value)) res.err = 'Not a valid email';
+                       return res;
+                   }
+               }
+           }
+     });
+
     stager.extendStep('end', {
         init: function() {
             node.game.doneButton.destroy();
@@ -343,17 +391,20 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         widget: {
             name: 'EndScreen',
             options: {
-				headerMessage: 'Děkujeme za účast!',
-				message: 'Váš individuální výsledek je níže. O tom, jak dopadla Vaše skupina a Vy osobně Vás budeme informovat e-mailem, pokud nám jej zanecháte.', 
-				totalWinCurrency: 'HK (Herních korun)',
-				showExitCode: false,
-				showFeedbackForm: true,
-                title: 'Váš individuální výsledek je níže. O tom, jak dopadla Vaše skupina a Vy osobně Vás budeme informovat e-mailem, pokud nám na sebe e-mail nezanecháte, nebudeme Vám moci poslat peníze za případnou výhru. ',
-                email: {
-                   texts: {
-                       label: 'Pokud chcete být informován o výsledcích turnaje a výši Vaší výhry, zanechte nám prosím svůj e-mail, pokud nám na sebe e-mail nezanecháte, nebudeme Vám moci poslat peníze za případnou výhru.'
-                   }
-               }
+			       	 texts: {
+                 headerMessage: 'Děkujeme za účast!',
+				         message: 'Váš individuální výsledek je níže. O tom, jak dopadla Vaše skupina a Vy osobně Vás budeme informovat e-mailem, pokud jste nám jej zanechal.',
+               },
+				       totalWinCurrency: 'HK (Herních korun)',
+               showEmailForm: false,
+               showExitCode: false,
+				       showFeedbackForm: false,
+                //title: 'Váš individuální výsledek je níže. O tom, jak dopadla Vaše skupina a Vy osobně, Vás budeme informovat e-mailem, pokud jste nám jej zanechal. ',
+                //email: {
+                //   texts: {
+                //       label: 'Pokud chcete být informován/a o výsledcích turnaje a výši Vaší výhry, zanechte nám prosím svůj e-mail. Pokud nám na sebe e-mail nezanecháte, nebudeme Vám moci poslat peníze za případnou výhru.'
+                //   }
+                //}
            }
         }
     });
