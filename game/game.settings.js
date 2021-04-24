@@ -38,8 +38,8 @@ module.exports = {
     TIMER: {
         instructions: 180000,
         effort: 60000,
-        questionnaire1: 90000,
         quiz: 180000,
+        questionnaire1: 90000,
         bid: function() {
             var round;
             round = this.getCurrentGameStage().round;
@@ -54,7 +54,8 @@ module.exports = {
             if (round < 3) return 50000;
             return 30000;
         },
-        questionnaire2: 90000
+        questionnaire2: 90000,
+        email: 60000,
     },
 
     treatments: {
