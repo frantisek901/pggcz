@@ -19,7 +19,7 @@ module.exports = {
 
     // Numnber of game rounds repetitions.
 
-    REPEAT: 2,
+    REPEAT: 10,
 
     // Minimum number of players that must be always connected.
     MIN_PLAYERS: 1,
